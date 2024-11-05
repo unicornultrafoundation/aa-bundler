@@ -17,8 +17,7 @@ const deployEP: DeployFunction = async function (hre: HardhatRuntimeEnvironment)
     process.exit(1)
   }
 
-  await deployEntryPoint(ethers.provider)
-  console.log('Deployed EntryPoint at', epAddr)
+  console.log('Deployed EntryPoint at', (await deployEntryPoint(ethers.provider)).address)
 }
 
 export default deployEP
