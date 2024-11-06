@@ -34,6 +34,14 @@ const config: HardhatUserConfig = {
     target: 'ethers-v5'
   },
   networks: {
+    u2u: {
+      url: 'https://rpc-mainnet.uniultra.xyz',
+      accounts: { mnemonic }
+    },
+    tu2u: {
+      url: 'https://rpc-nebulas-testnet.uniultra.xyz',
+      accounts: { mnemonic }
+    },
     localhost: {
       url: 'http://localhost:8545/',
       saveDeployments: false
