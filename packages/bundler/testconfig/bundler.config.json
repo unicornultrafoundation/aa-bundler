@@ -1,0 +1,22 @@
+{
+  "gasFactor": "1",
+  "port": "30001",
+  "network": "https://rpc-nebulas-testnet.uniultra.xyz",
+  "entryPoint": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+  "beneficiary": "0x68a6c841040B05D60434d81000f523Bf6355b31D",
+  "minBalance": "0.5",
+  "mnemonic": "./testconfig/mnemonic.txt",
+  "maxBundleGas": 5e6,
+  "minStake": "1" ,
+  "minUnstakeDelay": 0 ,
+  "autoBundleInterval": 3,
+  "autoBundleMempoolSize": 10,
+  "fixedGasOverhead":38000,
+  "perUserOpGasOverhead":11000,
+  "perUserOpWordGasOverhead":4,
+  "zeroByteGasCost":4,
+  "nonZeroByteGasCost":16,
+  "expectedBundleSize":1,
+  "estimationSignatureSize":65,
+  "estimationPaymasterDataSize":0
+}
