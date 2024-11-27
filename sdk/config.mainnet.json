@@ -1,0 +1,20 @@
+{
+	"enablePasswordEncryption": true,
+	"showTransactionConfirmationScreen": true,
+	"factory_address": "0x4Bf24334c493Be01B1bCb45d9FF3FED19EBBA741",
+	"stateVersion": "0.1",
+	"network": {
+		"chainID": "39",
+		"family": "EVM",
+		"name": "U2U Solaris Mainnet",
+		"provider": "https://rpc-mainnet.uniultra.xyz",
+		"entryPointAddress": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+		"bundler": "https://bundler.uniultra.xyz/rpc",
+		"baseAsset": {
+			"symbol": "U2U",
+			"name": "U2U",
+			"decimals": 18,
+			"image": "https://chainid.network/static/35fab254c800221049f830be7e2dd329/e73fe/u2u_nebulas.webp"
+		}
+	}
+}

@@ -1,0 +1,20 @@
+{
+	"enablePasswordEncryption": false,
+	"showTransactionConfirmationScreen": true,
+	"factory_address": "0x4Bf24334c493Be01B1bCb45d9FF3FED19EBBA741",
+	"stateVersion": "0.1",
+	"network": {
+		"chainID": "2484",
+		"family": "EVM",
+		"name": "U2U Testnet",
+		"provider": "https://rpc-nebulas-testnet.uniultra.xyz",
+		"entryPointAddress": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+		"bundler": "https://bundler.khoa.io.vn/rpc",
+		"baseAsset": {
+			"symbol": "TU2U",
+			"name": "TU2U",
+			"decimals": 18,
+			"image": "https://chainid.network/static/35fab254c800221049f830be7e2dd329/e73fe/u2u_nebulas.webp"
+		}
+	}
+}

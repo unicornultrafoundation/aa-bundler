@@ -2,7 +2,6 @@
 
 ### Mainnet/Testnet Setup:
 
-
 ### Local Setup:
 In order to implement the full spec storage access rules and opcode banning, it must run against a Geth compatible node which supports debug_traceCall.
 
