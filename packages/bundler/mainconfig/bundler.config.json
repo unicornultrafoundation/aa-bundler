@@ -1,0 +1,14 @@
+{
+  "gasFactor": "1",
+  "port": "30000",
+  "network": "https://rpc-mainnet.uniultra.xyz",
+  "entryPoint": "0xdbd3939BeeC5DC02Df4820212820cB078d95DD32",
+  "beneficiary": "0x70D86bF17B30D268285eCFD204F83522797bad6C",
+  "minBalance": "0.5",
+  "mnemonic": "./mainconfig/mnemonic.txt",
+  "maxBundleGas": 5e6,
+  "minStake": "1" ,
+  "minUnstakeDelay": 0 ,
+  "autoBundleInterval": 3,
+  "autoBundleMempoolSize": 10
+}
