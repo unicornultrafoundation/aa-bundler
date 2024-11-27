@@ -22,6 +22,15 @@ export interface BundlerConfig {
   minUnstakeDelay: number
   autoBundleInterval: number
   autoBundleMempoolSize: number
+
+  fixedGasOverhead?: number
+  perUserOpGasOverhead?: number
+  perUserOpWordGasOverhead?: number
+  zeroByteGasCost?: number
+  nonZeroByteGasCost?: number
+  expectedBundleSize?: number
+  estimationSignatureSize?: number
+  estimationPaymasterDataSize?: number
 }
 
 // TODO: implement merging config (args -> config.js -> default) and runtime shape validation
@@ -44,6 +53,15 @@ export const BundlerConfigShape = {
   minUnstakeDelay: ow.number,
   autoBundleInterval: ow.number,
   autoBundleMempoolSize: ow.number
+  ,
+  fixedGasOverhead: ow.number,
+  perUserOpGasOverhead: ow.number,
+  perUserOpWordGasOverhead: ow.number,
+  zeroByteGasCost: ow.number,
+  nonZeroByteGasCost: ow.number,
+  expectedBundleSize: ow.number,
+  estimationSignatureSize: ow.number,
+  estimationPaymasterDataSize: ow.number
 }
 
 // TODO: consider if we want any default fields at all

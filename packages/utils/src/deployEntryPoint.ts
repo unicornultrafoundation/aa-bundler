@@ -6,10 +6,8 @@ import { DeterministicDeployer } from './DeterministicDeployer'
 export const entryPointSalt = '0x90d8084deab30c2a37c45e8d47f49f2f7965183cb6990a98943ef94940681de3'
 
 export async function deployEntryPoint (provider: JsonRpcProvider, signer = provider.getSigner()): Promise<IEntryPoint> {
-  const addr = process.env.LOCAL != '1' ?
-    await new DeterministicDeployer(provider, signer).deterministicDeploy(entryPointByteCode, entryPointSalt)
-    :
-    (await (await signer.sendTransaction({ chainId: (await provider.getNetwork()).chainId, data: entryPointByteCode })).wait()).contractAddress;
+  // addr = process.env.LOCAL != '1' (await (await signer.sendTransaction({ chainId: (await provider.getNetwork()).chainId, data: entryPointByteCode })).wait()).contractAddress
+  const addr = await new DeterministicDeployer(provider, signer).deterministicDeploy(entryPointByteCode, entryPointSalt)
   return IEntryPoint__factory.connect(addr, signer)
 }
 
