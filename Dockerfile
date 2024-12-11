@@ -3,7 +3,6 @@ WORKDIR /usr/src/app
 #COPY yarn.lock ./
 #RUN npm install -g ts-node
 RUN apk update && apk add git
-RUN git submodule update --init --recursive
 RUN yarn
 RUN yarn preprocess
 COPY . .
