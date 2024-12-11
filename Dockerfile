@@ -1,6 +1,7 @@
 FROM node:20.17-alpine3.20
+RUN npm install -g ts-node
 WORKDIR /usr/src/app
 COPY package*.json ./
-RUN yarn 
+RUN yarn
 COPY . .
-ENTRYPOINT ["yarn", "bundler", "--unsafe", "--show-stack-traces", "--config"]
+CMD ["yarn", "bundler", "--unsafe", "--show-stack-traces", "--config", "./config/bundler.config.json"]
