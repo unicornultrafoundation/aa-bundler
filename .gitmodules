@@ -2,6 +2,9 @@
 	path = submodules/account-abstraction
 	url = https://github.com/eth-infinitism/account-abstraction.git
 	branch = releases/v0.7
+	shallow = true
 [submodule "tests"]
 	path = tests
-	url = git.u2u:unicornultrafoundation/aa-compliances.git
+	url = https://github.com/unicornultrafoundation/aa-compliances.git
+	branch = main
+	shallow = true
