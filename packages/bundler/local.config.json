@@ -4,7 +4,7 @@
   "network": "http://127.0.0.1:8545",
   "entryPoint": "0x5028978163A7729B6C45d8eFAFd9f1215CBcE902",
   "beneficiary": "0x326dA2e79418B5e275E2C527F350114152cBf7a0",
-  "minBalance": "1",
+  "minBalance": "0.2",
   "mnemonic": "./localconfig/mnemonic.txt",
   "maxBundleGas": 5e6,
   "minStake": "1" ,

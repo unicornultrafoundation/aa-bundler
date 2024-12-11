@@ -1,7 +1,11 @@
 FROM node:20.17-alpine3.20
-RUN npm install -g ts-node
 WORKDIR /usr/src/app
-COPY package*.json ./
+#COPY yarn.lock ./
+#RUN npm install -g ts-node
+RUN apk update && apk add git
+RUN git submodule update --init --recursive
 RUN yarn
+RUN yarn preprocess
 COPY . .
-CMD ["yarn", "bundler", "--unsafe", "--show-stack-traces", "--config", "./config/bundler.config.json"]
+ENV CONFIG=testnet
+ENTRYPOINT yarn bundler --unsafe --show-stack-traces --config "./packages/bundler/$CONFIG.config.json"

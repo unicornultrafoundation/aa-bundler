@@ -1,6 +1,6 @@
 {
   "gasFactor": "1",
-  "port": "30001",
+  "port": "3000",
   "network": "https://rpc-nebulas-testnet.uniultra.xyz",
   "entryPoint": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
   "beneficiary": "0x326dA2e79418B5e275E2C527F350114152cBf7a0",
