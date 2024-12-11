@@ -15,12 +15,13 @@ if (mnemonicFileName != null && fs.existsSync(mnemonicFileName)) {
 
 const infuraUrl = (name: string): string => `https://${name}.infura.io/v3/${process.env.INFURA_ID}`
 
-function getNetwork (url: string): NetworkUserConfig {
+function getNetwork (url: string, opts?: object): NetworkUserConfig {
   return {
     url,
     accounts: {
       mnemonic
-    }
+    },
+    ...opts
   }
 }
 
@@ -34,24 +35,15 @@ const config: HardhatUserConfig = {
     target: 'ethers-v5'
   },
   networks: {
-    u2u: {
-      url: 'https://rpc-mainnet.uniultra.xyz',
-      accounts: { mnemonic }
-    },
-    tu2u: {
-      url: 'https://rpc-nebulas-testnet.uniultra.xyz',
-      accounts: { mnemonic }
-    },
-    localhost: {
-      url: 'http://localhost:8545/',
-      saveDeployments: false
-    },
+    u2u: getNetwork('https://rpc-mainnet.uniultra.xyz'),
+    tu2u: getNetwork('https://rpc-nebulas-testnet.uniultra.xyz'),
+    localhost: getNetwork('http://localhost:8545', { saveDeployments: false }),
     goerli: getInfuraNetwork('goerli')
   },
   solidity: {
-    version: '0.8.23',
+    version: '0.8.28',
     settings: {
-      evmVersion: 'paris',
+      evmVersion: 'london',
       optimizer: { enabled: true }
     }
   }

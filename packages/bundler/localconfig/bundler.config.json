@@ -3,7 +3,7 @@
   "port": "3000",
   "network": "http://127.0.0.1:8545",
   "entryPoint": "0x5028978163A7729B6C45d8eFAFd9f1215CBcE902",
-  "beneficiary": "0x70D86bF17B30D268285eCFD204F83522797bad6C",
+  "beneficiary": "0x326dA2e79418B5e275E2C527F350114152cBf7a0",
   "minBalance": "1",
   "mnemonic": "./localconfig/mnemonic.txt",
   "maxBundleGas": 5e6,
