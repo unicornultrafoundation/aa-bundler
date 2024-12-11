@@ -53,7 +53,7 @@ export async function resolveConfiguration (programOpts: any): Promise<{ config:
   let mnemonic: string
   let wallet: Wallet
   try {
-    if (fs.statSync(config.mnemonic).isFile()) {
+    if (fs.existsSync(config.mnemonic) && fs.statSync(config.mnemonic).isFile()) {
     mnemonic = fs.readFileSync(config.mnemonic, 'ascii').trim()
     } else {
     mnemonic = process.env.MNEMONIC || ('test '.repeat(11) + 'junk')

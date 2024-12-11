@@ -5,7 +5,7 @@
   "entryPoint": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
   "beneficiary": "0x326dA2e79418B5e275E2C527F350114152cBf7a0",
   "minBalance": "0.2",
-  "mnemonic": "./testconfig/mnemonic.txt",
+  "mnemonic": "./mnemonic.txt",
   "maxBundleGas": 5e6,
   "minStake": "1" ,
   "minUnstakeDelay": 0 ,
