@@ -54,14 +54,14 @@ export const BundlerConfigShape = {
   autoBundleInterval: ow.number,
   autoBundleMempoolSize: ow.number
   ,
-  fixedGasOverhead: ow.number,
-  perUserOpGasOverhead: ow.number,
-  perUserOpWordGasOverhead: ow.number,
-  zeroByteGasCost: ow.number,
-  nonZeroByteGasCost: ow.number,
-  expectedBundleSize: ow.number,
-  estimationSignatureSize: ow.number,
-  estimationPaymasterDataSize: ow.number
+  fixedGasOverhead: ow.optional.number,
+  perUserOpGasOverhead: ow.optional.number,
+  perUserOpWordGasOverhead: ow.optional.number,
+  zeroByteGasCost: ow.optional.number,
+  nonZeroByteGasCost: ow.optional.number,
+  expectedBundleSize: ow.optional.number,
+  estimationSignatureSize: ow.optional.number,
+  estimationPaymasterDataSize: ow.optional.number
 }
 
 // TODO: consider if we want any default fields at all
