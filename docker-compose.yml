@@ -1,0 +1,14 @@
+services:
+  be:
+    container_name: aa-bundler
+    image: u2u/aa-bundler:latest
+    build: . 
+    env_file: .env
+    restart: always
+    ports:
+      - 9001:3000
+    logging:
+      driver: "json-file"
+      options:
+        max-size: 300m
+        tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
