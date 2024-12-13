@@ -54,12 +54,13 @@ export class DeterministicDeployer {
     return await this.provider.getCode(address).then(code => code.length > 2)
   }
 
-  async isDeployerDeployed (): Promise<boolean> {
-    return await this.isContractDeployed(DeterministicDeployer.proxyAddress)
+  async isDeployerDeployed(): Promise<boolean> {
+    return await this.isContractDeployed(DeterministicDeployer.proxyAddress) ||
+      await this.isContractDeployed(DeterministicDeployer.safeProxyAddress) && (DeterministicDeployer.proxyAddress = DeterministicDeployer.safeProxyAddress) !== ''
   }
 
   async deployFactory (): Promise<void> {
-    if (await this.isContractDeployed(DeterministicDeployer.proxyAddress)) {
+    if (await this.isDeployerDeployed()) {
       return
     }
     const bal = await this.provider.getBalance(DeterministicDeployer.deploymentSignerAddress)
@@ -117,6 +118,7 @@ export class DeterministicDeployer {
   }
 
   async deterministicDeploy (ctrCode: string | ContractFactory, salt: BigNumberish = 0, params: any[] = []): Promise<string> {
+    await this.isDeployerDeployed()
     const addr = DeterministicDeployer.getDeterministicDeployAddress(ctrCode, salt, params)
     if (!await this.isContractDeployed(addr)) {
       const signer = this.signer ?? this.provider.getSigner()
