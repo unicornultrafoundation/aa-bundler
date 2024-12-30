@@ -17,7 +17,7 @@
     "sol-ts": "yarn hardhat-compile && yarn tsc"
   },
   "dependencies": {
-    "@account-abstraction/contracts": "^0.7.0",
+    "@account-abstraction/contracts": "file:../../submodules/account-abstraction/contracts",
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/abstract-provider": "^5.7.0",
     "@ethersproject/abstract-signer": "^5.7.0",

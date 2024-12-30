@@ -5,6 +5,8 @@
 ### Local Setup:
 In order to implement the full spec storage access rules and opcode banning, it must run against a Geth compatible node which supports debug_traceCall.
 
+0. Compile
+-    `yarn preprocess1 && yarn preprocess2`
 1. Due to EIP155 protection, you need to deploy determistic-deployer contract yourself and set it with env (obviously not "determistic" anymore). Or you can run node with `--rpc.allow-unprotected-txs` to skip the fixes
 -    `packages/utils/src/DeterministicDeployer.ts:40`
 -    `u2u attach`

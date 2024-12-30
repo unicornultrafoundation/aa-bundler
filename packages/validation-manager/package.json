@@ -16,8 +16,8 @@
     "watch-tsc": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@account-abstraction/sdk": "0.7.0",
-    "@account-abstraction/utils": "0.7.0",
+    "@account-abstraction/sdk": "file:../sdk",
+    "@account-abstraction/utils": "file:../utils",
     "@ethersproject/properties": "^5.7.0",
     "@ethersproject/providers": "^5.7.0",
     "debug": "^4.3.4",

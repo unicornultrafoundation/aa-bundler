@@ -23,10 +23,10 @@
     "watch-tsc": "tsc -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@account-abstraction/contracts": "^0.7.0",
-    "@account-abstraction/sdk": "^0.7.0",
-    "@account-abstraction/utils": "^0.7.0",
-    "@account-abstraction/validation-manager": "^0.7.0",
+    "@account-abstraction/contracts": "file:../../submodules/account-abstraction/contracts",
+    "@account-abstraction/sdk": "file:../sdk",
+    "@account-abstraction/utils": "file:../utils",
+    "@account-abstraction/validation-manager": "file:../validation-manager",
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/providers": "^5.7.0",
     "@types/cors": "^2.8.12",
