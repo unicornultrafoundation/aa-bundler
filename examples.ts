@@ -9,47 +9,56 @@
 */
 
 import { ethers } from 'ethers';
-import { SimpleAccountAPI, ERC4337EthersProvider, HttpRpcClient } from './packages/sdk/src';
-import { packUserOp } from './packages/utils/src/ERC4337Utils';
-//import { DeterministicDeployer } from './packages/utils/src/DeterministicDeployer';
+import { SimpleAccountAPI, ERC4337EthersProvider, HttpRpcClient } from './packages/sdk';
+import { DeterministicDeployer, packUserOp } from './packages/utils';
 
 // contracts
-import { SimpleAccountFactory__factory, VerifyingPaymaster__factory } from './submodules/account-abstraction/contracts/types/factories';
-import { EntryPoint__factory } from './submodules/account-abstraction/contracts/types/factories';
-import { TestToken__factory } from './submodules/account-abstraction/contracts/types';
+import {
+  IEntryPoint__factory,
+  SimpleAccountFactory__factory,
+  VerifyingPaymaster__factory,
+  TestToken__factory
+} from './submodules/account-abstraction/typechain';
+//import { UserOperationStruct } from './submodules/account-abstraction/contracts/types/VerifyingPaymaster';
 
 // wallet with native coin
-const deployKey = '0x';
+const deployer = '0xed9fd4a8e268f724e9aa7787b556419b0cc42927be6c11632fa3991354a76233';
 
-// signing key for this smart account, address will be bound to this key too
+// signing key for this type of smart account
+// its address will be bound to this key too and no funds needed for this account
 const key = '0xed9fd4a8e268f724e9aa7787b556419b0cc42927be6c11632fa3991354a76233';
 
 // only entryPointAddress, bundlerUrl, rpcUrl is global
 const config = {
-  paymasterAddress: '0x12900bBD3E8178700877CE546275B117d16cD838',
-  factoryAddress:'0xf17bbeF5aCb9aCc410cf6D48218b8D3Ee05837e9',
+  paymasterAddress: '0x12900bBD3E8178700877CE546275B117d16cD838' || '0x36e895FE88861492C4aa7af154a304304F3d16fc',
+  factoryAddress: '0xf17bbeF5aCb9aCc410cf6D48218b8D3Ee05837e9',
   tokenAddress: '0xa80189B35C39E9cAabb56e1438d30BBEd45B2DB3',
-  entryPointAddress:'0x0000000071727De22E5E9d8BAf0edAc6f37da032',
+  entryPointAddress: '0x0000000071727De22E5E9d8BAf0edAc6f37da032',
   walletAddress: '',
 
-  bundlerUrl:'https://bundler-dev.u2u.xyz/rpc',
+  bundlerUrl: 'https://bundler.khoa.io.vn/rpc' || 'https://bundler-dev.u2u.xyz/rpc',
   rpcUrl: 'https://rpc-nebulas-testnet.u2u.xyz',
   chainId: 2484
 };
 
 const deploy = async () => {
-  const deployer = new ethers.Wallet(deployKey, rpc);
+  const signer = new ethers.Wallet(deployer, rpc);
 
   // entryPoint is predeployed
-  config.factoryAddress = (await (new SimpleAccountFactory__factory(deployer)).deploy(config.entryPointAddress)).address;
-  config.paymasterAddress = (await (new VerifyingPaymaster__factory(deployer)).deploy(config.entryPointAddress, signer.address)).address;
-  config.tokenAddress = (await (new TestToken__factory(deployer)).deploy()).address;
+  console.log('deploying:');
+  config.factoryAddress = (await (new SimpleAccountFactory__factory(signer)).deploy(config.entryPointAddress)).address;
+  console.log('deploying:');
+  config.paymasterAddress = (await (new VerifyingPaymaster__factory(signer)).deploy(config.entryPointAddress, signer.address)).address;
+  console.log('deploying:');
+  config.tokenAddress = (await (new TestToken__factory(signer)).deploy()).address;
 
-  // fund the paymaster and account
+  // fund the paymaster and smart account
   const value = ethers.utils.parseEther('0.1');
   config.walletAddress = await sa.getCounterFactualAddress();
-  await (await deployer.sendTransaction({ to: config.paymasterAddress, value })).wait();
-  await (await deployer.sendTransaction({ to: config.walletAddress, value })).wait();
+  console.log('funding:');
+  await (await signer.sendTransaction({ to: config.paymasterAddress, value })).wait();
+  console.log('funding:');
+  await (await signer.sendTransaction({ to: config.walletAddress, value })).wait();
 
   console.log('deployed:', config);
 };
@@ -66,32 +75,50 @@ const provider = new ERC4337EthersProvider(
   signer,
   rpc,
   new HttpRpcClient(config.bundlerUrl, config.entryPointAddress, config.chainId),
-  EntryPoint__factory.connect(config.entryPointAddress, rpc),
+  IEntryPoint__factory.connect(config.entryPointAddress, rpc),
   sa
 );
 const $ = provider.getSigner();
 
 const test = async () => {
+  console.log('testing:');
+
   const value = ethers.utils.parseEther('0.001');
-  const now = ~~(Date.now()/1000);
-  config.walletAddress = await $.getAddress() ;
+  const now = 1_800_000_000 || ~~(Date.now()/1000);
+  config.walletAddress = await $.getAddress();
 
   // send eth, both to & data required to be valid
   //let tx = await $.sendTransaction({ to: config.walletAddress, value, data: "0x" });
   //let rc = await tx.wait();
   //console.log('send:', tx, rc);
 
+  const until = now + 3600;
+  const pack = (to: number, from = 0, sig = '0x' + '00'.repeat(65)) => ethers.utils.defaultAbiCoder.encode(['uint48', 'uint48'], [to, from]) + sig.substring(2);
   // as simple as possible
-  let data = TestToken__factory.createInterface().encodeFunctionData('mint', [config.walletAddress, value]);
-  let op = await sa.createSignedUserOp({
-    target: config.tokenAddress, data,
-    //gasLimit: await provider.estimateGas({ to: config.tokenAddress, data })
+  const calls = ((i = TestToken__factory.createInterface()) => [
+    i.encodeFunctionData('mint', [config.walletAddress, value]),
+    i.encodeFunctionData('transfer', [config.paymasterAddress, value.div(2)]),
+  ])();
+  const op = await sa.createUnsignedUserOp({
+    target: config.tokenAddress, data: calls[0],
+    //gasLimit: (await provider.estimateGas({ to: config.tokenAddress, data: calls[0] })).add(10000)
   });
+  op.signature = '0x';
   console.log('op:', op);
-  // [SENDER, UNTIL, AFTER]
+
   //console.log('signer:', await paymaster.verifyingSigner());
-  let hash = await paymaster.getHash(packUserOp(op), now + 86400, now);
+  const hash = await paymaster.getHash(packUserOp(op), until, now);
   console.log('hash:', hash);
+
+  op.paymaster = config.paymasterAddress;
+  op.paymasterVerificationGasLimit = 3e5;
+  op.paymasterPostOpGasLimit = 0;
+  op.paymasterData = pack(until, now, await signer.signMessage(ethers.utils.arrayify(hash)));
+  op.signature = await sa.signUserOpHash(await sa.getUserOpHash(op));
+  op.preVerificationGas = await sa.getPreVerificationGas(op);
+  console.log(op);
+
+  console.log('send:', await provider.httpRpcClient.sendUserOpToBundler(op));
 };
 
 if (!config.factoryAddress || !config.paymasterAddress || !config.tokenAddress) {
