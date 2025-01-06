@@ -35,8 +35,9 @@ const config: HardhatUserConfig = {
     target: 'ethers-v5'
   },
   networks: {
-    u2u: getNetwork('https://rpc-mainnet.uniultra.xyz'),
-    tu2u: getNetwork('https://rpc-nebulas-testnet.uniultra.xyz'),
+    custom: getNetwork(process.env.RPC_URL || 'http://localhost'),
+    u2u: getNetwork('https://rpc-mainnet.u2u.xyz'),
+    tu2u: getNetwork('https://rpc-nebulas-testnet.u2u.xyz'),
     localhost: getNetwork('http://localhost:8545', { saveDeployments: false }),
     goerli: getInfuraNetwork('goerli')
   },

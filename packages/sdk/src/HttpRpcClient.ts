@@ -60,6 +60,10 @@ export class HttpRpcClient {
       .send('eth_estimateUserOperationGas', [hexifiedUserOp, this.entryPointAddress])
   }
 
+  async getUserOp(hash: string | Promise<string>): Promise<object> {
+    return await this.userOpJsonRpcProvider.send('eth_getUserOperationByHash', [await hash, this.entryPointAddress])
+  }
+
   private async printUserOperation (method: string, [userOp, entryPointAddress]: [UserOperation, string]): Promise<void> {
     debug('sending', method, {
       ...userOp

@@ -27,11 +27,11 @@ export class ERC4337EthersSigner extends Signer {
   async sendTransaction (transaction: Deferrable<TransactionRequest>): Promise<TransactionResponse> {
     const tx: TransactionRequest = await this.populateTransaction(transaction)
     await this.verifyAllNecessaryFields(tx)
+    delete tx.nonce
     const userOperation = await this.smartAccountAPI.createSignedUserOp({
+      ...tx,
       target: tx.to ?? '',
-      data: tx.data?.toString() ?? '',
-      value: tx.value,
-      gasLimit: tx.gasLimit
+      data: tx.data?.toString() ?? ''
     })
     const transactionResponse = await this.erc4337provider.constructUserOpTransactionResponse(userOperation)
     try {
@@ -42,6 +42,10 @@ export class ERC4337EthersSigner extends Signer {
     }
     // TODO: handle errors - transaction that is "rejected" by bundler is _not likely_ to ever resolve its "wait()"
     return transactionResponse
+  }
+
+  getTransactionCount(blockTag = "pending") {
+    return this.smartAccountAPI.getNonce().then(_ => _.toNumber())
   }
 
   unwrapError (errorIn: any): Error {
@@ -98,4 +102,5 @@ export class ERC4337EthersSigner extends Signer {
     const message = await this.smartAccountAPI.getUserOpHash(userOperation)
     return await this.originalSigner.signMessage(message)
   }
+
 }

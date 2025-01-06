@@ -33,6 +33,7 @@ export interface UserOperation {
 
   sender: string
   nonce: BigNumberish
+  initCode?: string
   factory?: string
   factoryData?: BytesLike
   callData: BytesLike
